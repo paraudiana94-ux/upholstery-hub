@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        if (saved === "light") document.documentElement.classList.add("light");
+      } catch (e) {}
+    })();
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Upholstery Hub — Upholstery shop in Glanmire, Cork</title>
+  <meta name="description" content="Upholstery Hub brings over 25 years’ experience to domestic and commercial upholstery, from homes and designers to bars, restaurants, gyms, and recliner recovery." />
+
+  <meta property="og:title" content="Upholstery Hub — Upholstery shop in Glanmire, Cork" />
+  <meta property="og:description" content="Domestic and commercial upholstery in Glanmire, Cork, with over 25 years’ experience." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://example.com" />
+  <!-- Add og:image later: 1200x630 PNG matching dark theme -->
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Upholstery Hub — Upholstery shop in Glanmire, Cork" />
+  <meta name="twitter:description" content="Domestic and commercial upholstery in Glanmire, Cork, with over 25 years’ experience." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="50" fill="%23f7d84b"/><text x="50" y="64" font-size="48" text-anchor="middle">🛋️</text></svg>'>
+
+  <style>
+    :root {
+      --bg: #020a18;
+      --bg-grad:
+        radial-gradient(circle at 18% 18%, rgba(247,216,75,0.20) 0%, transparent 28%),
+        radial-gradient(circle at 82% 30%, rgba(255,170,0,0.13) 0%, transparent 30%),
+        radial-gradient(circle at 50% 92%, rgba(247,216,75,0.10) 0%, transparent 36%),
+        linear-gradient(145deg, #020a18 0%, #071738 42%, #10101c 70%, #020a18 100%);
+      --surface: rgba(8,24,56,0.85);
+      --border: rgba(247,216,75,0.18);
+      --border-glow: rgba(247,216,75,0.42);
+      --text: #d0e0f0;
+      --text-bright: #e8f0ff;
+      --text-dim: #7890aa;
+      --neon: #f7d84b;
+      --cyan: #ffe66d;
+      --green: #00ff88;
+      --amber: #ffaa00;
+      --red: #ff4466;
+      --purple: #aa66ff;
+      --yellow: #f7d84b;
+      --yellow-soft: rgba(247,216,75,0.12);
+      --shadow: rgba(0, 0, 0, 0.34);
+      --header: rgba(2, 10, 24, 0.74);
+      --grid: rgba(247, 216, 75, 0.035);
+    }
+
+    html.light {
+      --bg: #fff9df;
+      --bg-grad:
+        radial-gradient(circle at 18% 18%, rgba(247,216,75,0.42) 0%, transparent 30%),
+        radial-gradient(circle at 82% 28%, rgba(255,170,0,0.22) 0%, transparent 32%),
+        radial-gradient(circle at 50% 92%, rgba(247,216,75,0.24) 0%, transparent 36%),
+        linear-gradient(145deg, #fffaf0 0%, #fff1a8 42%, #f8fbff 76%, #fff7d6 100%);
+      --surface: rgba(255,255,255,0.88);
+      --border: rgba(35, 30, 10, 0.16);
+      --border-glow: rgba(247,216,75,0.55);
+      --text: #2d3340;
+      --text-bright: #101520;
+      --text-dim: #68707e;
+      --neon: #c79b00;
+      --cyan: #a87b00;
+      --green: #008f5a;
+      --amber: #b86b00;
+      --red: #c2294a;
+      --purple: #7047d6;
+      --yellow: #f7d84b;
+      --yellow-soft: rgba(247,216,75,0.22);
+      --shadow: rgba(60, 45, 0, 0.12);
+      --header: rgba(255, 250, 226, 0.82);
+      --grid: rgba(60, 45, 0, 0.045);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--bg);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg-grad);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -4;
+      background: var(--bg-grad);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.12;
+      z-index: -2;
+      pointer-events: none;
+      animation: orbit 18s ease-in-out infinite alternate;
+    }
+
+    .orb.one {
+      background: var(--yellow);
+      left: -280px;
+      top: 12vh;
+    }
+
+    .orb.two {
+      background: var(--amber);
+      right: -300px;
+      top: 45vh;
+      animation-duration: 22s;
+    }
+
+    .orb.three {
+      background: var(--cyan);
+      left: calc(50% + 540px);
+      bottom: -220px;
+      animation-duration: 25s;
+    }
+
+    @keyframes orbit {
+      from { transform: translate3d(0, 0, 0) scale(1); }
+      to { transform: translate3d(50px, -35px, 0) scale(1.12); }
+    }
+
+    a {
+      color: var(--neon);
+      text-decoration: none;
+      transition: color 180ms ease, text-shadow 180ms ease;
+    }
+
+    a:hover {
+      color: var(--cyan);
+      text-shadow: 0 0 16px rgba(247, 216, 75, 0.35);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: var(--header);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-bright);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      font-size: 1.05rem;
+    }
+
+    .mini-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      flex: 0 0 38px;
+      box-shadow: 0 0 0 1px rgba(247,216,75,0.42), 0 0 22px rgba(247,216,75,0.18);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--yellow-soft);
+      color: var(--text-bright);
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 1.05rem;
+      box-shadow: 0 0 0 0 var(--border-glow);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--border-glow);
+      box-shadow: 0 0 24px rgba(247, 216, 75, 0.2);
+    }
+
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      padding: 86px 0 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .logo-badge {
+      width: clamp(170px, 25vw, 240px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 40% 30%, #ffe979 0%, #f7d84b 50%, #d7aa00 100%);
+      border: 2px solid rgba(247,216,75,0.75);
+      box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.28),
+        0 0 70px rgba(247, 216, 75, 0.2);
+    }
+
+    .logo-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 50%;
+    }
+
+    .eyebrow {
+      color: var(--neon);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      margin: 0 0 12px;
+    }
+
+    h1 {
+      color: var(--text-bright);
+      font-size: clamp(3rem, 9vw, 6.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.075em;
+      margin: 0 0 18px;
+    }
+
+    .role {
+      color: var(--neon);
+      font-weight: 900;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      margin: 0 0 28px;
+    }
+
+    .hero-line {
+      max-width: 780px;
+      color: var(--text-bright);
+      font-size: clamp(1.5rem, 4vw, 2.8rem);
+      line-height: 1.12;
+      letter-spacing: -0.055em;
+      margin: 0 0 34px;
+      font-weight: 800;
+    }
+
+    .hero-line strong {
+      color: var(--neon);
+    }
+
+    .hero-meta {
+      color: var(--text-dim);
+      max-width: 660px;
+      margin: 0 0 30px;
+      font-size: 1.02rem;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(247,216,75,0.8);
+      color: #080808;
+      background: linear-gradient(135deg, #ffe66d, #f7d84b 45%, #ffaa00);
+      padding: 13px 18px;
+      border-radius: 999px;
+      font-weight: 900;
+      box-shadow: 0 18px 40px rgba(247, 216, 75, 0.22);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .cta:hover {
+      color: #080808;
+      text-shadow: none;
+      transform: translateY(-2px);
+      box-shadow: 0 22px 52px rgba(247, 216, 75, 0.3);
+    }
+
+    .sections {
+      padding: 16px 0 64px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .section {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px var(--shadow);
+    }
+
+    .section-toggle {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: var(--text-bright);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .number {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border-glow);
+      display: inline-grid;
+      place-items: center;
+      color: #080808;
+      font-weight: 900;
+      font-size: 0.86rem;
+      background: var(--yellow);
+      box-shadow: 0 0 22px rgba(247,216,75,0.22);
+    }
+
+    .section-title {
+      flex: 1;
+      font-size: 1.08rem;
+      font-weight: 850;
+      letter-spacing: -0.025em;
+    }
+
+    .plus {
+      color: var(--neon);
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .section-body {
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: grid-template-rows 260ms ease;
+    }
+
+    .section-body-inner {
+      overflow: hidden;
+      padding: 0 20px 22px 68px;
+    }
+
+    .section.closed .section-body {
+      grid-template-rows: 0fr;
+    }
+
+    .section.closed .plus::before {
+      content: "+";
+    }
+
+    .section:not(.closed) .plus::before {
+      content: "−";
+    }
+
+    .section p {
+      margin: 0;
+      color: var(--text);
+    }
+
+    .section ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text);
+    }
+
+    .section li + li {
+      margin-top: 8px;
+    }
+
+    .highlight {
+      color: var(--neon);
+      font-weight: 900;
+    }
+
+    .contact-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .contact-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: baseline;
+    }
+
+    .contact-label {
+      color: var(--text-bright);
+      font-weight: 800;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 28px 20px 40px;
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 56px;
+      }
+
+      .logo-badge {
+        order: -1;
+        width: 158px;
+      }
+
+      .section-body-inner {
+        padding-left: 20px;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 16vw, 4.5rem);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <svg class="mini-logo" viewBox="0 0 300 300" role="img" aria-label="Upholstery Hub logo">
+          <circle cx="150" cy="150" r="148" fill="#f7d84b"/>
+          <circle cx="150" cy="150" r="133" fill="none" stroke="#111" stroke-width="6"/>
+          <circle cx="150" cy="150" r="126" fill="none" stroke="#111" stroke-width="2"/>
+          <path d="M102 135h96v54H102z" fill="none" stroke="#111" stroke-width="7"/>
+          <path d="M98 134c0-19 16-34 35-34h34c19 0 35 15 35 34v18H98z" fill="#111"/>
+          <circle cx="98" cy="153" r="14" fill="#111"/>
+          <circle cx="202" cy="153" r="14" fill="#111"/>
+          <path d="M80 153H16M220 153h64" stroke="#111" stroke-width="7"/>
+          <text x="150" y="229" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="38" letter-spacing="5" fill="#111">U</text>
+        </svg>
+        <span>Upholstery Hub</span>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="themeToggle" type="button" title="Toggle light and dark mode" aria-label="Toggle light and dark mode">☾</button>
+        <button class="icon-btn" id="collapseToggle" type="button" title="Collapse or expand all sections" aria-label="Collapse or expand all sections">−</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Trusted, skilled, practical</p>
+        <h1>Upholstery Hub</h1>
+        <p class="role">Upholstery shop in Glanmire, Cork</p>
+        <p class="hero-line">Upholstery Hub brings <strong>over 25 years’ experience</strong> to domestic and commercial upholstery, from homes and designers to bars, restaurants, gyms, and recliner recovery.</p>
+        <p class="hero-meta">Based in Unit 9, Glanmire Business Park, Glanmire Village, Co. Cork, helping customers restore, recover, and refresh furniture.</p>
+        <a class="cta" href="tel:0879897754">Contact us for upholstery work →</a>
+      </div>
+
+      <div class="logo-badge" aria-hidden="true">
+        <svg class="logo-svg" viewBox="0 0 600 600">
+          <circle cx="300" cy="300" r="298" fill="#f7d84b"/>
+          <circle cx="300" cy="300" r="273" fill="none" stroke="#111" stroke-width="9"/>
+          <circle cx="300" cy="300" r="260" fill="none" stroke="#111" stroke-width="3"/>
+
+          <path d="M207 266h186v98H207z" fill="none" stroke="#111" stroke-width="12"/>
+          <path d="M198 264c0-39 32-70 71-70h62c39 0 71 31 71 70v34H198z" fill="#111"/>
+          <circle cx="199" cy="303" r="27" fill="#111"/>
+          <circle cx="401" cy="303" r="27" fill="#111"/>
+          <path d="M162 303H36M438 303h126" stroke="#111" stroke-width="12"/>
+
+          <text x="300" y="438" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="55" letter-spacing="8" fill="#111">UPHOLSTERY</text>
+          <text x="300" y="508" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="25" letter-spacing="9" fill="#111">HUB</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="sections" aria-label="Page sections">
+      <article class="section">
+        <button class="section-toggle" type="button">
+          <span class="number">1</span>
+          <span class="section-title">What we do</span>
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="section-body">
+          <div class="section-body-inner">
+            <p>Upholstery Hub helps domestic and commercial customers restore, recover, and refresh furniture with <span class="highlight">over 25 years’ experience</span>.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <button class="section-toggle" type="button">
+          <span class="number">2</span>
+          <span class="section-title">Commercial and domestic upholstery</span>
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="section-body">
+          <div class="section-body-inner">
+            <ul>
+              <li>Upholstery for commercial and domestic customers, including bars, restaurants, gyms, designers, homeowners, and many more.</li>
+              <li>Furniture recovery and refresh work for homes, businesses, and spaces that need practical, durable finishes.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <button class="section-toggle" type="button">
+          <span class="number">3</span>
+          <span class="section-title">Recliner recovery</span>
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="section-body">
+          <div class="section-body-inner">
+            <p>One of the few in Ireland to recover recliners.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <button class="section-toggle" type="button">
+          <span class="number">4</span>
+          <span class="section-title">Why customers trust us</span>
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="section-body">
+          <div class="section-body-inner">
+            <ul>
+              <li>Over 25 years’ experience in upholstery.</li>
+              <li>Commercial and domestic work across Cork and beyond.</li>
+              <li>Based in Unit 9, Glanmire Business Park, Glanmire Village, Co. Cork, with a 5.0 Google rating from 18 reviews.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="section">
+        <button class="section-toggle" type="button">
+          <span class="number">5</span>
+          <span class="section-title">Contact and location</span>
+          <span class="plus" aria-hidden="true"></span>
+        </button>
+        <div class="section-body">
+          <div class="section-body-inner">
+            <div class="contact-card">
+              <div class="contact-line">
+                <span class="contact-label">Phone:</span>
+                <a href="tel:0879897754">087 989 7754</a>
+              </div>
+              <div class="contact-line">
+                <span class="contact-label">Address:</span>
+                <span>Unit 9, Glanmire Business Park, Glanmire Village, Co. Cork, T45 ER81</span>
+              </div>
+              <div class="contact-line">
+                <span class="contact-label">Instagram:</span>
+                <a href="https://www.instagram.com/upholsteryhub/" target="_blank" rel="noopener">@upholsteryhub</a>
+              </div>
+              <div class="contact-line">
+                <span class="contact-label">Hours:</span>
+                <span>Monday to Friday, 9am–5pm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    Upholstery Hub · <span id="year"></span> · Built with the AI Badge
+  </footer>
+
+  <script>
+    const html = document.documentElement;
+    const themeToggle = document.getElementById("themeToggle");
+    const collapseToggle = document.getElementById("collapseToggle");
+    const sections = Array.from(document.querySelectorAll(".section"));
+
+    function updateThemeIcon() {
+      themeToggle.textContent = html.classList.contains("light") ? "☀" : "☾";
+    }
+
+    themeToggle.addEventListener("click", () => {
+      html.classList.toggle("light");
+      try {
+        localStorage.setItem("theme", html.classList.contains("light") ? "light" : "dark");
+      } catch (e) {}
+      updateThemeIcon();
+    });
+
+    sections.forEach((section) => {
+      const button = section.querySelector(".section-toggle");
+      button.addEventListener("click", () => {
+        section.classList.toggle("closed");
+        updateCollapseIcon();
+      });
+    });
+
+    function updateCollapseIcon() {
+      const allClosed = sections.every(section => section.classList.contains("closed"));
+      collapseToggle.textContent = allClosed ? "+" : "−";
+    }
+
+    collapseToggle.addEventListener("click", () => {
+      const allClosed = sections.every(section => section.classList.contains("closed"));
+      sections.forEach(section => section.classList.toggle("closed", !allClosed));
+      updateCollapseIcon();
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+    updateThemeIcon();
+    updateCollapseIcon();
+  </script>
+</body>
+</html>
